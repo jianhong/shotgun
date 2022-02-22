@@ -1,4 +1,4 @@
-# ![jianhong/shotgun](docs/images/nf-core-shotgun_logo_light.png#gh-light-mode-only) ![jianhong/shotgun](docs/images/nf-core-shotgun_logo_dark.png#gh-dark-mode-only)
+# Nextflow Shotgun Pipeline
 
 [![GitHub Actions CI Status](https://github.com/jianhong/shotgun/workflows/nf-core%20CI/badge.svg)](https://github.com/jianhong/shotgun/actions?query=workflow%3A%22nf-core+CI%22)
 [![GitHub Actions Linting Status](https://github.com/jianhong/shotgun/workflows/nf-core%20linting/badge.svg)](https://github.com/jianhong/shotgun/actions?query=workflow%3A%22nf-core+linting%22)
