@@ -21,7 +21,7 @@ process TRIMMOMATIC {
     def args   = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    if [ "${meta.single_end}" == "true" ]; then
+    if [ "${meta.single_end}" = "true" ]; then
         trimmomatic SE \\
                     -threads $task.cpus \\
                     ${reads[0]} \\

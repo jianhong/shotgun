@@ -16,7 +16,8 @@ for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true
 
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
-
+if (params.kreport2mpa) { ch_kreport2mpa = file(params.kreport2mpa) } else { exit 1, 'kreport2mpa not specified!' }
+if (params.combine_mpa) { ch_combine_mpa = file(params.combine_mpa) } else { exit 1, 'combine_mpa not specified!' }
 /*
 ========================================================================================
     CONFIG FILES
@@ -145,7 +146,11 @@ workflow SHOTGUN {
     // MODULE: kraken2
     //
     if(!params.skip_kraken2){
-        KRAKEN2(KNEAD_DATA.out.pairs, PREPARE_GENOME.out.kraken2_db)
+        KRAKEN2(
+            KNEAD_DATA.out.pairs,
+            PREPARE_GENOME.out.kraken2_db,
+            ch_kreport2mpa,
+            ch_combine_mpa)
         ch_versions = ch_versions.mix(KRAKEN2.out.versions)
     }
 

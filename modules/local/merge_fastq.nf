@@ -12,7 +12,7 @@ process MERGE_FASTQ {
     def args   = task.ext.args   ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    if [ "${meta.single_end}" == "true" ]; then
+    if [ "${meta.single_end}" = "true" ]; then
         cat $reads > ${prefix}.fastq.gz
     else
         cat *.unmapped_1.fastq.gz.* > ${prefix}_R1.fastq.gz

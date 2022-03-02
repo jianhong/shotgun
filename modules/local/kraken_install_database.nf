@@ -17,14 +17,13 @@ process KRAKEN2_INSTALL {
     """
     kraken2_path=\$(perl -MCwd=abs_path -le 'print abs_path(shift)' \$(which kraken2))
     kraken2_path=\$(dirname \$kraken2_path)
-    echo \$kraken2_path
     # patch kraken2
-    mkdir bin
     cp -r \$kraken2_path bin
     sed -i -e 's/\\^ftp:/\\^https:/' bin/rsync_from_ncbi.pl
     sed -i -e 's/mv x assembly/mv -f x assembly/' bin/download_genomic_library.sh
+    sed -i -e 's/download_genomic_library.sh/bin\\/download_genomic_library.sh/g; s/rsync_from_ncbi.pl/bin\\/rsync_from_ncbi.pl/g;' bin/kraken2-build
     export PATH=\${PWD}/bin:\$PATH
-    if [ "${args}" == "--standard" ]; then
+    if [ "${args}" = "--standard" ]; then
         bin/kraken2-build \\
             --standard \\
             --db KRAKEN2_DB \\
@@ -52,7 +51,7 @@ process KRAKEN2_INSTALL {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        kraken2: \$(kraken2 --version | sed 's/Kraken version //g')
+        kraken2: \$(echo \$(kraken2 --version 2>&1) | sed 's/Kraken version //g; s/Copyright.*\$//g')
     END_VERSIONS
     """
 }

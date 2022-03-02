@@ -44,6 +44,58 @@
                 }
             }
         },
+        "pipeline_controler": {
+            "title": "Pipeline controler",
+            "type": "object",
+            "description": "To skip som processes or workflows",
+            "default": "",
+            "properties": {
+                "skip_fastqc": {
+                    "type": "boolean",
+                    "description": "Skip fastqc",
+                    "fa_icon": "fas fa-filter"
+                },
+                "trimmomatic_adapter": {
+                    "type": "string",
+                    "description": "Adapter fa file path for trimmomatic",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "default": "https://raw.githubusercontent.com/usadellab/Trimmomatic/main/adapters/NexteraPE-PE.fa"
+                },
+                "skip_metaphlan": {
+                    "type": "boolean",
+                    "description": "Skip Metaphlan",
+                    "fa_icon": "fas fa-filter"
+                },
+                "skip_kraken2": {
+                    "type": "boolean",
+                    "description": "Skip Kraken2",
+                    "fa_icon": "fas fa-filter"
+                },
+                "kreport2mpa":{
+                    "type": "string",
+                    "description": "file path of KrakenTools/kreport2mpa",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "default": "https://raw.githubusercontent.com/jenniferlu717/KrakenTools/master/kreport2mpa.py"
+                },
+                "combine_mpa":{
+                    "type": "string",
+                    "description": "file path of KrakenTools/combine_mpa",
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "default": "https://raw.githubusercontent.com/jenniferlu717/KrakenTools/master/combine_mpa.py"
+                },
+                "skip_kaiju": {
+                    "type": "boolean",
+                    "description": "Skip Kaiju",
+                    "fa_icon": "fas fa-filter"
+                },
+                "skip_humann": {
+                    "type": "boolean",
+                    "description": "Skip HUMAnN3",
+                    "fa_icon": "fas fa-filter"
+                }
+            },
+            "fa_icon": "fas fa-filter"
+        },
         "reference_genome_options": {
             "title": "Reference genome options",
             "type": "object",
@@ -52,7 +104,7 @@
             "properties": {
                 "genome": {
                     "type": "string",
-                    "description": "Name of iGenomes reference.",
+                    "description": "Name of host iGenomes reference.",
                     "fa_icon": "fas fa-book",
                     "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
                 },
@@ -61,9 +113,51 @@
                     "format": "file-path",
                     "mimetype": "text/plain",
                     "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
+                    "description": "Path to host FASTA genome file.",
                     "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
                     "fa_icon": "far fa-file-code"
+                },
+                "bowtie2_index": {
+                    "type": "string",
+                    "default": "None",
+                    "help_text": "See [Install KneadData](https://github.com/biobakery/kneaddata#create-a-custom-database)",
+                    "fa_icon": "fas fa-database",
+                    "description": "Path to host bowtie2 index files."
+                },
+                "metaphlan_db": {
+                    "type": "string",
+                    "default": "None",
+                    "help_text": "See [metaphlan3 doc](https://github.com/biobakery/biobakery/wiki/metaphlan3)",
+                    "fa_icon": "fas fa-server",
+                    "description": "Path to metaphlan database."
+                },
+                "kaiju_db": {
+                    "type": "string",
+                    "default": "https://kaiju.binf.ku.dk/database/kaiju_db_nr_2021-02-24.tgz",
+                    "description": "Path to Kaiju database.",
+                    "help_text": "See [Creating the reference database and index](https://github.com/bioinformatics-centre/kaiju)",
+                    "fa_icon": "fas fa-server"
+                },
+                "kraken2_db": {
+                    "type": "string",
+                    "default": "None",
+                    "help_text": "See [Kraken 2 Databases](https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases)",
+                    "fa_icon": "fas fa-server",
+                    "description": "Path to Kraken2 database."
+                },
+                "humann_dna_db": {
+                    "type": "string",
+                    "default": "None",
+                    "help_text": "See [Download the ChocoPhlAn database](https://github.com/biobakery/humann#5-download-the-databases)",
+                    "fa_icon": "fas fa-server",
+                    "description": "Path to DNA level database."
+                },
+                "humann_pro_db": {
+                    "type": "string",
+                    "default": "None",
+                    "help_text": "See [Download a translated search database](https://github.com/biobakery/humann#5-download-the-databases)",
+                    "fa_icon": "fas fa-server",
+                    "description": "Path to protein level database."
                 },
                 "igenomes_base": {
                     "type": "string",
@@ -245,6 +339,9 @@
     "allOf": [
         {
             "$ref": "#/definitions/input_output_options"
+        },
+        {
+            "$ref": "#/definitions/pipeline_controler"
         },
         {
             "$ref": "#/definitions/reference_genome_options"

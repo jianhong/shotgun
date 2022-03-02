@@ -16,7 +16,7 @@ process KAIJU_INSTALL {
     script:
     def args   = task.ext.args ?: ''
     """
-    tar -xzf $tgz
+    tar --strip-components=1 -xf $tgz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -8,6 +8,7 @@ process KRAKEN2_MERGE {
 
     input:
     path kraken2_mpa
+    path combine_mpa
 
     output:
     path "${prefix}_kraken.txt"                          , emit: kraken2_mpa
@@ -17,13 +18,13 @@ process KRAKEN2_MERGE {
     def args   = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "merged"
     """
-    combine_mpa.py \\
+    python ${combine_mpa} \\
         --input $kraken2_mpa \\
         --output ${prefix}_kraken.txt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        kraken2: \$(kraken2 --version | sed 's/Kraken version //g')
+        kraken2: \$(echo \$(kraken2 --version 2>&1) | sed 's/Kraken version //g; s/Copyright.*\$//g')
     END_VERSIONS
     """
 }
