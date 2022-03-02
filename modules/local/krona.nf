@@ -19,8 +19,8 @@ process KRONA {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     ktImportText  \\
-        -o ${prefix}_kaiju.html
-        $krona_out
+        -o ${prefix}_kaiju.html \\
+        $krona_out,${meta.id}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

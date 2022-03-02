@@ -21,7 +21,7 @@ process KAIJU2TABLE {
     kaiju2table  \\
         -t nodes.dmp -n names.dmp \\
         $args \\
-        -o ${prefix}_kaiju.tsv
+        -o ${prefix}_kaiju.tsv \\
         $kaiju_outs
 
     cat <<-END_VERSIONS > versions.yml

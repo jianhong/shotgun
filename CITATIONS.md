@@ -15,6 +15,15 @@
 * [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
     > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
 
+* [KneadData](https://huttenhower.sph.harvard.edu/kneaddata/), [Metaphlan](https://huttenhower.sph.harvard.edu/metaphlan/), [HUMAnN 3.0](https://huttenhower.sph.harvard.edu/humann/)
+    > Beghini F, McIver LJ, Blanco-Míguez A, Dubois L, Asnicar F, Maharjan S, Mailyan A, Manghi P, Scholz M, Thomas AM, Valles-Colomer M, Weingart G, Zhang Y, Zolfo M, Huttenhower C, Franzosa EA, Segata N. Integrating taxonomic, functional, and strain-level profiling of diverse microbial communities with bioBakery 3. Elife. 2021 May 4;10:e65088. doi: 10.7554/eLife.65088. PMID: 33944776; PMCID: PMC8096432.
+
+* [Kaiju](https://github.com/bioinformatics-centre/kaiju)
+    > Menzel P, Ng KL, Krogh A. Fast and sensitive taxonomic classification for metagenomics with Kaiju. Nat Commun. 2016 Apr 13;7:11257. doi: 10.1038/ncomms11257. PMID: 27071849; PMCID: PMC4833860.
+
+* [Kraken2](https://ccb.jhu.edu/software/kraken2/)
+    > Wood DE, Lu J, Langmead B. Improved metagenomic analysis with Kraken 2. Genome Biol. 2019 Nov 28;20(1):257. doi: 10.1186/s13059-019-1891-0. PMID: 31779668; PMCID: PMC6883579.
+
 ## Software packaging/containerisation tools
 
 * [Anaconda](https://anaconda.com)

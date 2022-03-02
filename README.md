@@ -13,20 +13,23 @@
 
 ## Introduction
 
-<!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is for and what it does -->
 **jianhong/shotgun** is a bioinformatics best-practice analysis pipeline for Shotgun Sequencing Pipelines.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
 
 <!-- TODO nf-core: Add full-sized test dataset and amend the paragraph below if applicable -->
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources. The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/shotgun/results).
+On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources. The results obtained from the full-sized test can be viewed on the [results webpage](https://jianhong.github.io/shotgun/results).
 
 ## Pipeline summary
 
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
-
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+3. Clean data ([`KneadData`](https://huttenhower.sph.harvard.edu/kneaddata/))
+4. Profile metagenomic reads:
+    - Metagenomic Phylogenetic Analysis ([`Metaphlan`](https://huttenhower.sph.harvard.edu/metaphlan/))
+    - Taxonomic classification of high-throughput sequencing reads([`Kaiju`](https://github.com/bioinformatics-centre/kaiju))
+    - Taxonomic classification system using exact k-mer alignment ([`Kraken2`](https://ccb.jhu.edu/software/kraken2/))
+    - The HMP Unified Metabolic Analysis Network ([`HUMAnN 3.0`](https://huttenhower.sph.harvard.edu/humann/))
 
 ## Quick Start
 
