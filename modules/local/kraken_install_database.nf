@@ -1,7 +1,7 @@
 process KRAKEN2_INSTALL {
-    tag 'process_high'
-    tag 'process_high_memory'
-    tag 'error_retry'
+    label 'process_high'
+    label 'process_high_memory'
+    label 'error_retry'
 
     conda (params.enable_conda ? "bioconda::kraken2=2.1.2" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

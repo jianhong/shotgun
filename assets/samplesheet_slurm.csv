@@ -1,0 +1,7 @@
+sample,fastq_1,fastq_2
+L-058-00-INF-NP,https://github.com/jianhong/shotgun/raw/master/assets/test_data/L-058-00-INF-NP_R1.fastq.gz,https://github.com/jianhong/shotgun/raw/master/assets/test_data/L-058-00-INF-NP_R2.fastq.gz
+L-058-01-INF-NP,https://github.com/jianhong/shotgun/raw/master/assets/test_data/L-058-01-INF-NP_R1.fastq.gz,https://github.com/jianhong/shotgun/raw/master/assets/test_data/L-058-01-INF-NP_R2.fastq.gz
+M-005-08-INF-NP,https://github.com/jianhong/shotgun/raw/master/assets/test_data/M-005-08-INF-NP_R1.fastq.gz,https://github.com/jianhong/shotgun/raw/master/assets/test_data/M-005-08-INF-NP_R2.fastq.gz
+M-005-10-INF-NP,https://github.com/jianhong/shotgun/raw/master/assets/test_data/M-005-10-INF-NP_R1.fastq.gz,https://github.com/jianhong/shotgun/raw/master/assets/test_data/M-005-10-INF-NP_R2.fastq.gz
+neg_pcr_ctrl,https://github.com/jianhong/shotgun/raw/master/assets/test_data/neg_pcr_ctrl_R1.fastq.gz,https://github.com/jianhong/shotgun/raw/master/assets/test_data/neg_pcr_ctrl_R2.fastq.gz
+neg_pcr_ctrl2,https://github.com/jianhong/shotgun/raw/master/assets/test_data/neg_pcr_ctrl2_R1.fastq.gz,https://github.com/jianhong/shotgun/raw/master/assets/test_data/neg_pcr_ctrl2_R2.fastq.gz

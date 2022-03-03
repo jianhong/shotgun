@@ -1,5 +1,5 @@
 process KAIJU_INSTALL {
-    tag 'process_low'
+    label 'process_low'
 
     conda (params.enable_conda ? "bioconda::kaiju=1.8.2" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -16,7 +16,7 @@ process KAIJU_INSTALL {
     script:
     def args   = task.ext.args ?: ''
     """
-    tar --strip-components=1 -xf $tgz
+    tar -xf $tgz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

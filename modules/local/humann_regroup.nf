@@ -1,6 +1,6 @@
 process HUMANN_GROUP {
     tag "$meta.id"
-    tag 'process_medium'
+    label 'process_low'
 
     conda (params.enable_conda ? "bioconda::humann=3.0.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

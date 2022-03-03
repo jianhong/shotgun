@@ -1,6 +1,6 @@
 process KNEADDATA_COUNT {
     tag "$meta.id"
-    tag 'process_medium'
+    label 'process_low'
 
     conda (params.enable_conda ? "bioconda::trimmomatic=0.39 bioconda::trf=4.09.1 bioconda::bowtie2=2.4.4 bioconda::samtools=1.14 bioconda::fastqc=0.11.9 bioconda::kneaddata=0.10.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

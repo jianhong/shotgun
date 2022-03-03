@@ -24,6 +24,15 @@
 * [Kraken2](https://ccb.jhu.edu/software/kraken2/)
     > Wood DE, Lu J, Langmead B. Improved metagenomic analysis with Kraken 2. Genome Biol. 2019 Nov 28;20(1):257. doi: 10.1186/s13059-019-1891-0. PMID: 31779668; PMCID: PMC6883579.
 
+* [Bracken](https://ccb.jhu.edu/software/bracken/index.shtml)
+    > Lu J, Breitwieser FP, Thielen P, Salzberg SL. (2017) Bracken: estimating species abundance in metagenomics data. PeerJ Computer Science 3:e104, doi:10.7717/peerj-cs.104
+
+* [centrifuge](https://ccb.jhu.edu/software/centrifuge/manual.shtml)
+    > Kim D, Song L, Breitwieser FP, Salzberg SL. Centrifuge: rapid and sensitive classification of metagenomic sequences. Genome Res. 2016 Dec;26(12):1721-1729. doi: 10.1101/gr.210641.116. Epub 2016 Oct 17. PMID: 27852649; PMCID: PMC5131823.
+
+* [mOTUs](https://github.com/motu-tool/mOTUs)
+    > Alessio Milanese, Daniel R Mende, Lucas Paoli, Guillem Salazar, Hans-Joachim Ruscheweyh, Miguelangel Cuenca, Pascal Hingamp, Renato Alves, Paul I Costea, Luis Pedro Coelho, Thomas S B Schmidt, Alexandre Almeida, Alex L Mitchell, Robert D Finn, Jaime Huerta-Cepas, Peer Bork, Georg Zeller & Shinichi Sunagawa. Microbial abundance, activity and population genomic profiling with mOTUs2; Nature Communications 10, Article number: 1014 (2019). PMID: 30833550; doi: 10.1038/s41467-019-08844-4
+
 ## Software packaging/containerisation tools
 
 * [Anaconda](https://anaconda.com)

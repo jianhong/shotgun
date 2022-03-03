@@ -1,6 +1,6 @@
 process TRF {
     tag "$meta.id"
-    tag 'process_medium'
+    label 'process_medium'
 
     conda (params.enable_conda ? "bioconda::trf=4.09.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

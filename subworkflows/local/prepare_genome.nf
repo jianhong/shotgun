@@ -11,6 +11,9 @@ include { HUMANN_INSTALL
 include { HUMANN_INSTALL
     as HUMANN_INSTALL_PROTEIN      } from '../../modules/local/humann_install_database'
 include { BOWTIE2_BUILD            } from '../../modules/nf-core/modules/bowtie2/build/main'
+include { UNTAR as UNTAR_KRAKEN    } from '../../modules/local/untar'
+include { UNTAR as UNTAR_MOTU      } from '../../modules/local/untar'
+include { MOTUS_INSTALL            } from '../../modules/local/motus_install_database'
 
 workflow PREPARE_GENOME {
     main:
@@ -65,7 +68,12 @@ workflow PREPARE_GENOME {
     ch_kraken_db = Channel.empty()
     if(!params.skip_kraken2){
         if(params.kraken2_db){
-            ch_kraken_db = Channel.value(file(params.kraken2_db))
+            if(params.kraken2_db.endsWith('.gz') | params.kraken2_db.endsWith('.tgz')){
+                UNTAR_KRAKEN ( file(params.kraken2_db, checkIfExists: true) )
+                ch_kraken_db = UNTAR_KRAKEN.out.untar
+            }else{
+                ch_kraken_db = Channel.value(file(params.kraken2_db, checkIfExists: true))
+            }
         }else{
             ch_kraken_db = KRAKEN2_INSTALL().kraken2_db
         }
@@ -89,6 +97,23 @@ workflow PREPARE_GENOME {
         }
     }
 
+    /*
+     * install mOTUs database
+     */
+    ch_motus_db = Channel.empty()
+    if(!params.skip_motus){
+        if(params.motus_db){
+            if(params.motus_db.endsWith('.gz') | params.motus_db.endsWith('.tgz')){
+                UNTAR_MOTU ( file(params.motus_db, checkIfExists: true) )
+                ch_motus_db = UNTAR_MOTU.out.untar
+            }else{
+                ch_motus_db = Channel.value(file(params.motus_db, checkIfExists: true))
+            }
+        }else{
+            ch_motus_db = MOTUS_INSTALL().motus_db
+        }
+    }
+
     emit:
     fasta = ch_fasta                          // channel: [ fasta ]
     bowtie2_index = ch_bw2_index              // channel: [ [bw2 index] ]
@@ -97,5 +122,6 @@ workflow PREPARE_GENOME {
     kraken2_db = ch_kraken_db                 // channel: [ [kraken2_db] ]
     humann_dna_db = ch_humann_dna_db          // channel: [ [humann_db] ]
     humann_pro_db = ch_humann_pro_db          // channel: [ [humann_db] ]
+    motus_db = ch_motus_db                    // channel: [ [motus_db] ]
     versions = ch_version                     // channel: [ versions.yml ]
 }

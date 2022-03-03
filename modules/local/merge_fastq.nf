@@ -1,5 +1,6 @@
 process MERGE_FASTQ {
     tag "$meta.id"
+    label 'process_low'
 
     input:
     tuple val(meta), path(reads)

@@ -30,6 +30,8 @@ On release, automated continuous integration tests run the pipeline on a full-si
     - Taxonomic classification of high-throughput sequencing reads([`Kaiju`](https://github.com/bioinformatics-centre/kaiju))
     - Taxonomic classification system using exact k-mer alignment ([`Kraken2`](https://ccb.jhu.edu/software/kraken2/))
     - The HMP Unified Metabolic Analysis Network ([`HUMAnN 3.0`](https://huttenhower.sph.harvard.edu/humann/))
+    - Classifier for metagenomic sequences ([`centrifuge`](https://ccb.jhu.edu/software/centrifuge/manual.shtml))
+    - Taxonomic meta-omics profiling using universal marker genes ([`mOTUs`](https://github.com/motu-tool/mOTUs))
 
 ## Quick Start
 

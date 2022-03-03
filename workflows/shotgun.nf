@@ -43,6 +43,7 @@ include { METAPHLAN                   } from '../subworkflows/local/metaphlan'
 include { KAIJU                       } from '../subworkflows/local/kaiju'
 include { KRAKEN2                     } from '../subworkflows/local/kraken'
 include { HUMANN                      } from '../subworkflows/local/humann'
+include { MOTUS                       } from '../subworkflows/local/motus'
 /*
 ========================================================================================
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -86,6 +87,11 @@ workflow SHOTGUN {
     .map {
         meta, fastq ->
             meta.id = meta.id.split('_')[0..-2].join('_')
+            if(meta.single_end){
+                meta.reads_length = WorkflowShotgun.getReadsLength(fastq)
+            }else{
+                meta.reads_length = WorkflowShotgun.getReadsLength(fastq[0])
+            }
             [ meta, fastq ] }
     .groupTuple(by: [0])
     .branch {
@@ -123,7 +129,7 @@ workflow SHOTGUN {
     //
     // MODULE: Clean data
     //
-    KNEAD_DATA(INPUT_CHECK.out.reads, PREPARE_GENOME.out.bowtie2_index)
+    KNEAD_DATA(ch_cat_fastq, PREPARE_GENOME.out.bowtie2_index)
     ch_versions = ch_versions.mix(KNEAD_DATA.out.versions)
 
     //
@@ -162,6 +168,24 @@ workflow SHOTGUN {
                 PREPARE_GENOME.out.humann_dna_db,
                 PREPARE_GENOME.out.humann_pro_db)
         ch_versions = ch_versions.mix(HUMANN.out.versions)
+    }
+
+    //
+    // MODULE: Centrifuge
+    //
+    //if(!params.skip_centrifuge){
+    //    CENTRIFUGE( KNEAD_DATA.out.reads,
+    //            PREPARE_GENOME.out.humann_dna_db,
+    //            PREPARE_GENOME.out.humann_pro_db)
+    //    ch_versions = ch_versions.mix(CENTRIFUGE.out.versions)
+    //}
+
+    //
+    // MODULE: mOTUs
+    //
+    if(!params.skip_motus){
+        MOTUS( KNEAD_DATA.out.reads, PREPARE_GENOME.out.motus_db)
+        ch_versions = ch_versions.mix(MOTUS.out.versions)
     }
 
     CUSTOM_DUMPSOFTWAREVERSIONS (

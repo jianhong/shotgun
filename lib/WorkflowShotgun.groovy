@@ -2,6 +2,8 @@
 // This file holds several functions specific to the workflow/shotgun.nf in the nf-core/shotgun pipeline
 //
 
+import java.util.zip.GZIPInputStream
+
 class WorkflowShotgun {
 
     //
@@ -54,6 +56,22 @@ class WorkflowShotgun {
                 "  ${params.genomes.keySet().join(", ")}\n" +
                 "==================================================================================="
             System.exit(1)
+        }
+    }
+
+    //
+    // Check the reads_length
+    //
+    public static Integer getReadsLength(path){
+        path.withInputStream{
+            fastq ->
+                InputStream gzStream = new GZIPInputStream(fastq)
+                Reader decoder = new InputStreamReader(gzStream, 'US-ASCII')
+                BufferedReader buffered = new BufferedReader(decoder)
+                String line
+                line = buffered.readLine()
+                line = buffered.readLine()
+                return line.length()
         }
     }
 }

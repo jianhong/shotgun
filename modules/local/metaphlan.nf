@@ -1,6 +1,6 @@
 process METAPHLAN_RUN {
     tag "$meta.id"
-    tag 'process_medium'
+    label 'process_medium'
 
     conda (params.enable_conda ? "bioconda::metaphlan=3.0.14" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

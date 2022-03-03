@@ -1,5 +1,5 @@
 process HUMANN_INSTALL {
-    tag 'process_medium'
+    label 'process_high'
 
     conda (params.enable_conda ? "bioconda::humann=3.0.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

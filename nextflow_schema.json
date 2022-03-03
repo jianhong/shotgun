@@ -92,6 +92,16 @@
                     "type": "boolean",
                     "description": "Skip HUMAnN3",
                     "fa_icon": "fas fa-filter"
+                },
+                "skip_centrifuge": {
+                    "type": "boolean",
+                    "description": "Skip Centrifuge",
+                    "fa_icon": "fas fa-filter"
+                },
+                "skip_motus": {
+                    "type": "boolean",
+                    "description": "Skip mOTUs",
+                    "fa_icon": "fas fa-filter"
                 }
             },
             "fa_icon": "fas fa-filter"
@@ -158,6 +168,20 @@
                     "help_text": "See [Download a translated search database](https://github.com/biobakery/humann#5-download-the-databases)",
                     "fa_icon": "fas fa-server",
                     "description": "Path to protein level database."
+                },
+                "centrifuge_db": {
+                    "type": "string",
+                    "default": "https://genome-idx.s3.amazonaws.com/centrifuge/nt_2018_3_3.tar.gz",
+                    "help_text": "See [build database](https://ccb.jhu.edu/software/centrifuge/manual.shtml#the-centrifuge-build-indexer)",
+                    "fa_icon": "fas fa-server",
+                    "description": "Path to Centrifuge database."
+                },
+                "motus_db": {
+                    "type": "string",
+                    "default": "https://zenodo.org/record/5140350/files/db_mOTU_v3.0.1.tar.gz",
+                    "help_text": "See [Download database](https://github.com/motu-tool/mOTUs#installation)",
+                    "fa_icon": "fas fa-server",
+                    "description": "Path to mOTUs database."
                 },
                 "igenomes_base": {
                     "type": "string",

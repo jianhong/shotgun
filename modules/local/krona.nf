@@ -1,6 +1,6 @@
 process KRONA {
     tag "$meta.id"
-    tag 'process_low'
+    label 'process_low'
 
     conda (params.enable_conda ? "bioconda::krona=2.8.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
