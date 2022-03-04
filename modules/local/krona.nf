@@ -11,7 +11,7 @@ process KRONA {
     tuple val(meta), path(krona_out)
 
     output:
-    tuple val(meta), path("${prefix}_kaiju.html")        , emit: summary
+    tuple val(meta), path("${prefix}_krona.html")        , emit: summary
     path "versions.yml"                                  , emit: versions
 
     script:
@@ -19,7 +19,7 @@ process KRONA {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     ktImportText  \\
-        -o ${prefix}_kaiju.html \\
+        -o ${prefix}_krona.html \\
         $krona_out,${meta.id}
 
     cat <<-END_VERSIONS > versions.yml

@@ -131,6 +131,19 @@ workflow SHOTGUN {
     //
     KNEAD_DATA(ch_cat_fastq, PREPARE_GENOME.out.bowtie2_index)
     ch_versions = ch_versions.mix(KNEAD_DATA.out.versions)
+    if(params.use_single_kneaddata){
+        ch_knead_data = KNEAD_DATA.out.reads.map{
+                            meta, reads ->
+                                meta.single_end = true
+                                [meta, reads]
+                        }
+    }else{
+        ch_knead_data = KNEAD_DATA.out.reads
+                            .mix(KNEAD_DATA.out.pairs)
+                            .filter{
+                                it[0].single_end ?: it[1].size() == 2
+                            }
+    }
 
     //
     // MODULE: Metaphlan
@@ -144,7 +157,7 @@ workflow SHOTGUN {
     // MODULE: kaiju
     //
     if(!params.skip_kaiju){
-        KAIJU(KNEAD_DATA.out.pairs, PREPARE_GENOME.out.kaiju_db)
+        KAIJU(ch_knead_data, PREPARE_GENOME.out.kaiju_db)
         ch_versions = ch_versions.mix(KAIJU.out.versions)
     }
 
@@ -153,7 +166,7 @@ workflow SHOTGUN {
     //
     if(!params.skip_kraken2){
         KRAKEN2(
-            KNEAD_DATA.out.pairs,
+            ch_knead_data,
             PREPARE_GENOME.out.kraken2_db,
             ch_kreport2mpa,
             ch_combine_mpa)
@@ -174,7 +187,7 @@ workflow SHOTGUN {
     // MODULE: Centrifuge
     //
     //if(!params.skip_centrifuge){
-    //    CENTRIFUGE( KNEAD_DATA.out.reads,
+    //    CENTRIFUGE( ch_knead_data,
     //            PREPARE_GENOME.out.humann_dna_db,
     //            PREPARE_GENOME.out.humann_pro_db)
     //    ch_versions = ch_versions.mix(CENTRIFUGE.out.versions)
@@ -184,7 +197,7 @@ workflow SHOTGUN {
     // MODULE: mOTUs
     //
     if(!params.skip_motus){
-        MOTUS( KNEAD_DATA.out.reads, PREPARE_GENOME.out.motus_db)
+        MOTUS(ch_knead_data, PREPARE_GENOME.out.motus_db)
         ch_versions = ch_versions.mix(MOTUS.out.versions)
     }
 

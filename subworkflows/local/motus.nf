@@ -19,7 +19,7 @@ workflow MOTUS {
     //
     // MODULE: create mOTUs summary table
     //
-    MOTUS_MERGE(MOTUS_RUN.out.motus_out.map{it[1]}.collect())
+    MOTUS_MERGE(MOTUS_RUN.out.motus_out.map{it[1]}.collect(), motus_db)
 
     emit:
     motus = MOTUS_MERGE.out.merged_out               // channel: [ summary ]

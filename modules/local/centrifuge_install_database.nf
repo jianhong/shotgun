@@ -1,10 +1,10 @@
-process MOTUS_INSTALL {
+process CENTRIFUGE_INSTALL {
     label 'process_medium'
 
-    conda (params.enable_conda ? "bioconda::motus=3.0.1" : null)
+    conda (params.enable_conda ? "bioconda::centrifuge=1.0.4_beta" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/motus:3.0.1--pyhdfd78af_0' :
-        'quay.io/biocontainers/motus:3.0.1--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/centrifuge:1.0.4_beta--py36pl526he941832_2' :
+        'quay.io/biocontainers/centrifuge:1.0.4_beta--py36pl526he941832_2' }"
 
     input:
     path motus_download

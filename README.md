@@ -32,6 +32,9 @@ On release, automated continuous integration tests run the pipeline on a full-si
     - The HMP Unified Metabolic Analysis Network ([`HUMAnN 3.0`](https://huttenhower.sph.harvard.edu/humann/))
     - Classifier for metagenomic sequences ([`centrifuge`](https://ccb.jhu.edu/software/centrifuge/manual.shtml))
     - Taxonomic meta-omics profiling using universal marker genes ([`mOTUs`](https://github.com/motu-tool/mOTUs))
+5. Visualization:
+    - [`pavian`](https://github.com/fbreitwieser/pavian)
+    - [`Krona`](https://github.com/marbl/Krona/wiki)
 
 ## Quick Start
 

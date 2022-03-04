@@ -8,9 +8,10 @@ process MOTUS_MERGE {
 
     input:
     path motus_outs
+    path reference_db
 
     output:
-    tuple val(meta), path("${prefix}_motus.out")         , emit: merged_out
+    path "${prefix}_motus.out"                           , emit: merged_out
     path "versions.yml"                                  , emit: versions
 
     script:
@@ -18,14 +19,14 @@ process MOTUS_MERGE {
     prefix = task.ext.prefix ?: "merged"
     """
     motus merge \\
-        -i "${motus.join(',').trim()}" \\
+        -i "${motus_outs.join(',').trim()}" \\
         -t $task.cpus \\
         $args \\
         -o ${prefix}_motus.out
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        kaiju: \$(echo \$(kaiju -h 2>&1) | sed 's/Kaiju //g; s/Copyright.*\$//g')
+        mOTUs: \$(grep motus ${reference_db}/db_mOTU_versions | sed 's/motus\\t//g')
     END_VERSIONS
     """
 }

@@ -110,7 +110,7 @@ workflow PREPARE_GENOME {
                 ch_motus_db = Channel.value(file(params.motus_db, checkIfExists: true))
             }
         }else{
-            ch_motus_db = MOTUS_INSTALL().motus_db
+            ch_motus_db = MOTUS_INSTALL(file(params.motus_download, checkIfExists: true)).motus_db
         }
     }
 

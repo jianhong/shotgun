@@ -4,7 +4,7 @@
 
 include { KAIJU_RUN                   } from '../../modules/local/kaiju'
 include { KAIJU2TABLE                 } from '../../modules/local/kaiju2table'
-include { KRONA                       } from '../../modules/local/krona'
+include { KRONA as KRONA_KAIJU        } from '../../modules/local/krona'
 
 workflow KAIJU {
     take:
@@ -20,7 +20,7 @@ workflow KAIJU {
     //
     // MODULE: krona html output
     //
-    KRONA(KAIJU_RUN.out.krona_input)
+    KRONA_KAIJU(KAIJU_RUN.out.krona_input)
 
     //
     // MODULE: create kaiju summary table

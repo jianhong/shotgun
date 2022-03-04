@@ -8,7 +8,7 @@ process MOTUS_RUN {
         'quay.io/biocontainers/motus:3.0.1--pyhdfd78af_0' }"
 
     input:
-    tuple path(reads)
+    tuple val(meta), path(reads)
     path reference_db
 
     output:
@@ -30,7 +30,7 @@ process MOTUS_RUN {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        kaiju: \$(echo \$(kaiju -h 2>&1) | sed 's/Kaiju //g; s/Copyright.*\$//g')
+        mOTUs: \$(grep motus ${reference_db}/db_mOTU_versions | sed 's/motus\\t//g')
     END_VERSIONS
     """
 }
