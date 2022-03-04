@@ -18,6 +18,7 @@ for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
 if (params.kreport2mpa) { ch_kreport2mpa = file(params.kreport2mpa) } else { exit 1, 'kreport2mpa not specified!' }
 if (params.combine_mpa) { ch_combine_mpa = file(params.combine_mpa) } else { exit 1, 'combine_mpa not specified!' }
+
 /*
 ========================================================================================
     CONFIG FILES

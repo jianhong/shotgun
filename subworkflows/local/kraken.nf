@@ -5,6 +5,7 @@
 include { KRAKEN2_RUN                 } from '../../modules/local/kraken'
 include { KRAKEN2_MERGE               } from '../../modules/local/kraken_mergecount'
 include { BRACKEN                     } from '../../modules/local/bracken'
+include { KRONA as KRONA_KRAKEN2      } from '../../modules/local/krona'
 
 workflow KRAKEN2 {
     take:
@@ -28,6 +29,11 @@ workflow KRAKEN2 {
     // MODULE: Abundance estimation
     //
     BRACKEN(KRAKEN2_RUN.out.kraken2_rep, kraken2_db)
+
+    //
+    // MODULE: create krona output
+    //
+    KRONA_KRAKEN2(KRAKEN2_RUN.out.kraken2_rep)
 
     emit:
     kraken2 = KRAKEN2_MERGE.out.kraken2_mpa          // channel: [ summary ]
