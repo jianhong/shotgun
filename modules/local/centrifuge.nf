@@ -23,20 +23,20 @@ process CENTRIFUGE_RUN {
     def inputs = meta.single_end ? "-U $reads" : "-1 ${reads[0]} -2 ${reads[1]}"
     """
     centrifuge $args \\
-        -x $reference_db \\
+        -x $reference_db/nt \\
         --threads $task.cpus \\
         $inputs \\
         --report-file ${prefix}_centrifuge.report \\
         -S ${prefix}_centrifuge.out
 
     centrifuge-kreport \\
-        -x $reference_db \\
+        -x $reference_db/nt \\
         ${prefix}_centrifuge.out > \\
         ${prefix}_kraken_like.out
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        centrifuge: \$(echo \$(centrifuge --version 2>&1) | sed 's/centrifuge //g; s/Copyright.*\$//g)
+        centrifuge: \$(echo \$(centrifuge --version 2>&1) | sed 's/version //g; s/ .*\$//g')
     END_VERSIONS
     """
 }

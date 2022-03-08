@@ -14,6 +14,8 @@ include { BOWTIE2_BUILD            } from '../../modules/nf-core/modules/bowtie2
 include { UNTAR as UNTAR_KRAKEN    } from '../../modules/local/untar'
 include { UNTAR as UNTAR_MOTU      } from '../../modules/local/untar'
 include { MOTUS_INSTALL            } from '../../modules/local/motus_install_database'
+include { CENTRIFUGE_INSTALL       } from '../../modules/local/centrifuge_install_database'
+include { UNTAR as UNTAR_CENTRIFUGE} from '../../modules/local/untar'
 
 workflow PREPARE_GENOME {
     main:
@@ -114,6 +116,23 @@ workflow PREPARE_GENOME {
         }
     }
 
+    /*
+     * install Centrifuge database
+     */
+    ch_centrifuge_db = Channel.empty()
+    if(!params.skip_centrifuge){
+        if(params.centrifuge_db){
+            if(params.centrifuge_db.endsWith('.gz') | params.centrifuge_db.endsWith('.tgz')){
+                UNTAR_CENTRIFUGE ( file(params.centrifuge_db, checkIfExists: true) )
+                ch_centrifuge_db = UNTAR_CENTRIFUGE.out.untar
+            }else{
+                ch_centrifuge_db = Channel.value(file(params.centrifuge_db, checkIfExists: true))
+            }
+        }else{
+            ch_centrifuge_db = CENTRIFUGE_INSTALL().centrifuge_db
+        }
+    }
+
     emit:
     fasta = ch_fasta                          // channel: [ fasta ]
     bowtie2_index = ch_bw2_index              // channel: [ [bw2 index] ]
@@ -123,5 +142,6 @@ workflow PREPARE_GENOME {
     humann_dna_db = ch_humann_dna_db          // channel: [ [humann_db] ]
     humann_pro_db = ch_humann_pro_db          // channel: [ [humann_db] ]
     motus_db = ch_motus_db                    // channel: [ [motus_db] ]
+    centrifuge_db = ch_centrifuge_db          // channel: [ [centrifuge_db] ]
     versions = ch_version                     // channel: [ versions.yml ]
 }

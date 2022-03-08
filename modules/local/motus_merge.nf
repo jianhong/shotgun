@@ -1,5 +1,6 @@
 process MOTUS_MERGE {
     label 'process_low'
+    label 'error_ignore'
 
     conda (params.enable_conda ? "bioconda::motus=3.0.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

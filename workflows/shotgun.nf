@@ -45,6 +45,7 @@ include { KAIJU                       } from '../subworkflows/local/kaiju'
 include { KRAKEN2                     } from '../subworkflows/local/kraken'
 include { HUMANN                      } from '../subworkflows/local/humann'
 include { MOTUS                       } from '../subworkflows/local/motus'
+include { CENTRIFUGE                  } from '../subworkflows/local/centrifuge'
 /*
 ========================================================================================
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -187,12 +188,11 @@ workflow SHOTGUN {
     //
     // MODULE: Centrifuge
     //
-    //if(!params.skip_centrifuge){
-    //    CENTRIFUGE( ch_knead_data,
-    //            PREPARE_GENOME.out.humann_dna_db,
-    //            PREPARE_GENOME.out.humann_pro_db)
-    //    ch_versions = ch_versions.mix(CENTRIFUGE.out.versions)
-    //}
+    if(!params.skip_centrifuge){
+        CENTRIFUGE( ch_knead_data,
+                PREPARE_GENOME.out.centrifuge_db)
+        ch_versions = ch_versions.mix(CENTRIFUGE.out.versions)
+    }
 
     //
     // MODULE: mOTUs

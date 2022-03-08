@@ -1,5 +1,5 @@
 //
-// Repeat the kneaddata pipeline by nextflow
+// Kaiju
 //
 
 include { KAIJU_RUN                   } from '../../modules/local/kaiju'

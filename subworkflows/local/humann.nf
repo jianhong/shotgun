@@ -1,5 +1,5 @@
 //
-// Repeat the kneaddata pipeline by nextflow
+// HUMAnN
 //
 
 include { HUMANN_RUN                  } from '../../modules/local/humann'

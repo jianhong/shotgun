@@ -1,32 +1,32 @@
 process CENTRIFUGE_INSTALL {
-    label 'process_medium'
+    label 'process_high'
 
     conda (params.enable_conda ? "bioconda::centrifuge=1.0.4_beta" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/centrifuge:1.0.4_beta--py36pl526he941832_2' :
         'quay.io/biocontainers/centrifuge:1.0.4_beta--py36pl526he941832_2' }"
 
-    input:
-    path motus_download
-
     output:
-    path "$prefix"                                       , emit: motus_db
+    path "$prefix"                                       , emit: centrifuge_db
     path "versions.yml"                                  , emit: versions
 
     script:
     def args   = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "db_mOTU"
+    prefix = task.ext.prefix ?: "db_centrifuge"
     """
-    cp $motus_download dwdDB.py
-    python dwdDB.py \\
-        -t $task.cpus
-    if [ "$prefix" != "db_mOTU" ]; then
-        mv db_mOTU $prefix
-    fi
+    centrifuge-download -o taxonomy taxonomy
+    centrifuge-download -o library $args refseq > seqid2taxid.map
+    cat library/*/*.fna > input-sequences.fna
+    ## build centrifuge index with 4 threads
+    centrifuge-build -p $task.cpus \\
+        --conversion-table seqid2taxid.map \\
+        --taxonomy-tree taxonomy/nodes.dmp \\
+        --name-table taxonomy/names.dmp \\
+        input-sequences.fna $prefix/nt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        mOTUs: \$(grep motus ${prefix}/db_mOTU_versions | sed 's/motus\\t//g')
+        centrifuge: \$(echo \$(centrifuge --version 2>&1) | sed 's/centrifuge //g; s/Copyright.*\$//g')
     END_VERSIONS
     """
 }

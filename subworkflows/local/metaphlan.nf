@@ -1,5 +1,5 @@
 //
-// Repeat the kneaddata pipeline by nextflow
+// MetaPhlAn
 //
 
 include { METAPHLAN_RUN               } from '../../modules/local/metaphlan'

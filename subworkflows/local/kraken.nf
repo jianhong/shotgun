@@ -1,5 +1,5 @@
 //
-// Repeat the kneaddata pipeline by nextflow
+// Kraken2
 //
 
 include { KRAKEN2_RUN                 } from '../../modules/local/kraken'

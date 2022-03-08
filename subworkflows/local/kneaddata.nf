@@ -1,5 +1,5 @@
 //
-// Repeat the kneaddata pipeline by nextflow
+// KneadData
 //
 
 include { KNEADDATA                   } from '../../modules/local/kneaddata'
