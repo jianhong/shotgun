@@ -33,6 +33,12 @@
 * [mOTUs](https://github.com/motu-tool/mOTUs)
     > Alessio Milanese, Daniel R Mende, Lucas Paoli, Guillem Salazar, Hans-Joachim Ruscheweyh, Miguelangel Cuenca, Pascal Hingamp, Renato Alves, Paul I Costea, Luis Pedro Coelho, Thomas S B Schmidt, Alexandre Almeida, Alex L Mitchell, Robert D Finn, Jaime Huerta-Cepas, Peer Bork, Georg Zeller & Shinichi Sunagawa. Microbial abundance, activity and population genomic profiling with mOTUs2; Nature Communications 10, Article number: 1014 (2019). PMID: 30833550; doi: 10.1038/s41467-019-08844-4
 
+* [Krona](https://github.com/marbl/Krona/wiki)
+    > Ondov BD, Bergman NH, and Phillippy AM. Interactive metagenomic visualization in a Web browser. BMC Bioinformatics. 2011 Sep 30; 12(1):385.
+
+* [pavian](https://github.com/fbreitwieser/pavian)
+    > Pavian: interactive analysis of metagenomics data for microbiome studies and pathogen identification. FP Breitwieser, SL Salzberg - Bioinformatics, 2020
+
 ## Software packaging/containerisation tools
 
 * [Anaconda](https://anaconda.com)

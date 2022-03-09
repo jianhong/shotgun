@@ -18,7 +18,7 @@
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
 
 <!-- TODO nf-core: Add full-sized test dataset and amend the paragraph below if applicable -->
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources. The results obtained from the full-sized test can be viewed on the [results webpage](https://jianhong.github.io/shotgun/results).
+On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources. The results obtained from the full-sized test can be viewed on the [results webpage](https://jianhong.github.io/shotgun/results.html).
 
 ## Pipeline summary
 
@@ -33,7 +33,7 @@ On release, automated continuous integration tests run the pipeline on a full-si
     - Classifier for metagenomic sequences ([`centrifuge`](https://ccb.jhu.edu/software/centrifuge/manual.shtml))
     - Taxonomic meta-omics profiling using universal marker genes ([`mOTUs`](https://github.com/motu-tool/mOTUs))
 5. Visualization:
-    - [`pavian`](https://github.com/fbreitwieser/pavian)
+    - [`pavian`](https://github.com/fbreitwieser/pavian) (comming soon)
     - [`Krona`](https://github.com/marbl/Krona/wiki)
 
 ## Quick Start
@@ -65,7 +65,7 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 ## Documentation
 
-The jianhong/shotgun pipeline comes with documentation about the pipeline [usage](https://nf-co.re/shotgun/usage), [parameters](https://nf-co.re/shotgun/parameters) and [output](https://nf-co.re/shotgun/output).
+The jianhong/shotgun pipeline comes with documentation about the pipeline [usage](https://jianhong.github.io/shotgun/usage.html), [parameters](https://jianhong.github.io/shotgun/parameters.html) and [output](https://jianhong.github.io/shotgun/output.html).
 
 ## Credits
 
@@ -78,8 +78,6 @@ We thank the following people for their extensive assistance in the development 
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
-
-For further information or help, don't hesitate to get in touch on the [Slack `#shotgun` channel](https://nfcore.slack.com/channels/shotgun) (you can join with [this invite](https://nf-co.re/join/slack)).
 
 ## Citations
 
