@@ -20,7 +20,7 @@ workflow MOTUS {
     //
     // MODULE: create krona output
     //
-    KRONA_MOTUS(MOTUS_RUN.out.motus_out)
+    KRONA_MOTUS(MOTUS_RUN.out.krona_input)
 
     //
     // MODULE: create mOTUs summary table

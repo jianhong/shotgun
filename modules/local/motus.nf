@@ -13,6 +13,7 @@ process MOTUS_RUN {
 
     output:
     tuple val(meta), path("${prefix}_motus.out")         , emit: motus_out
+    tuple val(meta), path("${prefix}_motus.out.krona")   , emit: krona_input
     path "versions.yml"                                  , emit: versions
 
     script:
@@ -26,7 +27,17 @@ process MOTUS_RUN {
         -n ${prefix} \\
         -db ${reference_db} \\
         $args \\
+        -I ${prefix}.bam \\
         -o ${prefix}_motus.out
+    # for krona
+    motus profile \\
+        -i ${prefix}.bam \\
+        -t $task.cpus \\
+        -n ${prefix} \\
+        -C parenthesis \\
+        -o ${prefix}_motus.out.krona
+    # clean up
+    rm ${prefix}.bam
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
