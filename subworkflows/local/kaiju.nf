@@ -21,6 +21,7 @@ workflow KAIJU {
     // MODULE: krona html output
     //
     KRONA_KAIJU(KAIJU_RUN.out.krona_input)
+    ch_versions = ch_versions.mix(KRONA_KAIJU.out.versions.ifEmpty(null))
 
     //
     // MODULE: create kaiju summary table

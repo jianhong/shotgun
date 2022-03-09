@@ -133,6 +133,7 @@ workflow SHOTGUN {
     //
     KNEAD_DATA(ch_cat_fastq, PREPARE_GENOME.out.bowtie2_index)
     ch_versions = ch_versions.mix(KNEAD_DATA.out.versions)
+    ch_multiqc_files = ch_multiqc_files.mix(KNEAD_DATA.out.count.ifEmpty([]))
     if(params.use_single_kneaddata){
         ch_knead_data = KNEAD_DATA.out.reads.map{
                             meta, reads ->

@@ -6,6 +6,7 @@ include { KRAKEN2_RUN                 } from '../../modules/local/kraken'
 include { KRAKEN2_MERGE               } from '../../modules/local/kraken_mergecount'
 include { BRACKEN                     } from '../../modules/local/bracken'
 include { KRONA as KRONA_KRAKEN2      } from '../../modules/local/krona'
+//include { SANKEY as SANKEY_KRAKEN2    } from '../../modules/local/sankey'
 
 workflow KRAKEN2 {
     take:
@@ -29,11 +30,19 @@ workflow KRAKEN2 {
     // MODULE: Abundance estimation
     //
     BRACKEN(KRAKEN2_RUN.out.kraken2_rep, kraken2_db)
+    ch_versions = ch_versions.mix(BRACKEN.out.versions.ifEmpty(null))
 
     //
     // MODULE: create krona output
     //
     KRONA_KRAKEN2(KRAKEN2_RUN.out.kraken2_rep)
+    ch_versions = ch_versions.mix(KRONA_KRAKEN2.out.versions.ifEmpty(null))
+
+    //
+    // MODULE: create sankey plot output
+    //
+    //SANKEY_KRAKEN2(KRAKEN2_RUN.out.kraken2_rep.map{it[1]}.collect())
+    //ch_versions = ch_versions.mix(SANKEY_KRAKEN2.out.versions.ifEmpty(null))
 
     emit:
     kraken2 = KRAKEN2_MERGE.out.kraken2_mpa          // channel: [ summary ]

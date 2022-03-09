@@ -1,12 +1,16 @@
 # jianhong/shotgun: Usage
 
-## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/shotgun/usage](https://nf-co.re/shotgun/usage)
-
-> _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
-
 ## Introduction
 
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
+`jianhong/shotgun` pipeline is a bioinformatics analysis pipeline used for microbiome shotgun analysis.
+The pipeline will filter the reads by `KneadData` and then do analysis by multiple tools,
+such as [`Metaphlan`](https://huttenhower.sph.harvard.edu/metaphlan/),
+[`Kaiju`](https://github.com/bioinformatics-centre/kaiju),
+[`HUMAnN 3.0`](https://huttenhower.sph.harvard.edu/humann/),
+[`Kraken2`](https://ccb.jhu.edu/software/kraken2/) and
+[`mOTUs`](https://github.com/motu-tool/mOTUs).
+The reports of those tools will be visualized by
+[`Krona`](https://github.com/marbl/Krona/wiki).
 
 ## Samplesheet input
 
@@ -22,26 +26,26 @@ The `sample` identifiers have to be the same when you have re-sequenced the same
 
 ```console
 sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
+SAMPLE1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+SAMPLE2,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
+SAMPLE3,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
 ```
 
 ### Full samplesheet
 
 The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
 
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
+A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `SAMPLE4` has been sequenced twice.
 
 ```console
 sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
-CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
+SAMPLE1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+SAMPLE2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
+SAMPLE3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
+SAMPLE4,AEG588A4_S4_L003_R1_001.fastq.gz,
+SAMPLE4,AEG588A5_S5_L003_R1_001.fastq.gz,
+SAMPLE5,AEG588A6_S6_L003_R1_001.fastq.gz,
+SAMPLE6,AEG588A6_S6_L004_R1_001.fastq.gz,
 ```
 
 | Column         | Description                                                                                                                                                                            |
@@ -57,7 +61,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```console
-nextflow run jianhong/shotgun --input samplesheet.csv --genome GRCh37 -profile docker
+nextflow run jianhong/shotgun --input samplesheet.csv -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -138,22 +142,22 @@ Specify the path to a specific config file (this is a core Nextflow command). Se
 
 Whilst the default requirements set within the pipeline will hopefully work for most people and with most input data, you may find that you want to customise the compute resources that the pipeline requests. Each step in the pipeline has a default set of requirements for number of CPUs, memory and time. For most of the steps in the pipeline, if the job exits with any of the error codes specified [here](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L18) it will automatically be resubmitted with higher requests (2 x original, then 3 x original). If it still fails after the third attempt then the pipeline execution is stopped.
 
-For example, if the nf-core/rnaseq pipeline is failing after multiple re-submissions of the `STAR_ALIGN` process due to an exit code of `137` this would indicate that there is an out of memory issue:
+For example, if the nf-core/rnaseq pipeline is failing after multiple re-submissions of the `CENTRIFUGE_RUN` process due to an exit code of `137` this would indicate that there is an out of memory issue:
 
 ```console
-[62/149eb0] NOTE: Process `RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)` terminated with an error exit status (137) -- Execution is retried (1)
-Error executing process > 'RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)'
+[62/149eb0] NOTE: Process `NFCORE_SHOTGUN:CENTRIFUGE:CENTRIFUGE_RUN (WT_REP1)` terminated with an error exit status (137) -- Execution is retried (1)
+Error executing process > 'NFCORE_SHOTGUN:CENTRIFUGE:CENTRIFUGE_RUN (WT_REP1)'
 
 Caused by:
-    Process `RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)` terminated with an error exit status (137)
+    Process `NFCORE_SHOTGUN:CENTRIFUGE:CENTRIFUGE_RUN (WT_REP1)` terminated with an error exit status (137)
 
 Command executed:
-    STAR \
-        --genomeDir star \
-        --readFilesIn WT_REP1_trimmed.fq.gz  \
-        --runThreadN 2 \
-        --outFileNamePrefix WT_REP1. \
-        <TRUNCATED>
+    centrifuge  \\
+        -x centrifuge_db/nt \\
+        --threads 8 \\
+        -U a.fastq.gz \\
+        --report-file a_centrifuge.report \\
+        -S a_centrifuge.out
 
 Command exit status:
     137
@@ -162,24 +166,24 @@ Command output:
     (empty)
 
 Command error:
-    .command.sh: line 9:  30 Killed    STAR --genomeDir star --readFilesIn WT_REP1_trimmed.fq.gz --runThreadN 2 --outFileNamePrefix WT_REP1. <TRUNCATED>
+    .command.sh: line 9:  30 Killed    centrifuge . <TRUNCATED>
 Work dir:
     /home/pipelinetest/work/9d/172ca5881234073e8d76f2a19c88fb
 
 Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
 ```
 
-To bypass this error you would need to find exactly which resources are set by the `STAR_ALIGN` process. The quickest way is to search for `process STAR_ALIGN` in the [nf-core/rnaseq Github repo](https://github.com/nf-core/rnaseq/search?q=process+STAR_ALIGN). We have standardised the structure of Nextflow DSL2 pipelines such that all module files will be present in the `modules/` directory and so based on the search results the file we want is `modules/nf-core/software/star/align/main.nf`. If you click on the link to that file you will notice that there is a `label` directive at the top of the module that is set to [`label process_high`](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/modules/nf-core/software/star/align/main.nf#L9). The [Nextflow `label`](https://www.nextflow.io/docs/latest/process.html#label) directive allows us to organise workflow processes in separate groups which can be referenced in a configuration file to select and configure subset of processes having similar computing requirements. The default values for the `process_high` label are set in the pipeline's [`base.config`](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L33-L37) which in this case is defined as 72GB. Providing you haven't set any other standard nf-core parameters to __cap__ the [maximum resources](https://nf-co.re/usage/configuration#max-resources) used by the pipeline then we can try and bypass the `STAR_ALIGN` process failure by creating a custom config file that sets at least 72GB of memory, in this case increased to 100GB. The custom config below can then be provided to the pipeline via the [`-c`](#-c) parameter as highlighted in previous sections.
+To bypass this error you would need to find exactly which resources are set by the `CENTRIFUGE_RUN` process. The quickest way is to search for `process CENTRIFUGE_RUN` in the [jianhong/shotgun Github repo](https://github.com/jianhong/shotgun/search?q=process+STAR_ALIGN). We have standardised the structure of Nextflow DSL2 pipelines such that all module files will be present in the `modules/` directory and so based on the search results the file we want is `modules/local/centrifuge.nf`. If you click on the link to that file you will notice that there is a `label` directive at the top of the module that is set to [`label process_high`](https://github.com/jianhong/shotgun/blob/master/modules/local/centrifuge.nf#L3). The [Nextflow `label`](https://www.nextflow.io/docs/latest/process.html#label) directive allows us to organise workflow processes in separate groups which can be referenced in a configuration file to select and configure subset of processes having similar computing requirements. The default values for the `process_high` label are set in the pipeline's [`base.config`](https://github.com/jianhong/shotgun/blob/master/conf/base.config#L39-L43) which in this case is defined as 120GB. Providing you haven't set any other standard nf-core parameters to __cap__ the [maximum resources](https://nf-co.re/usage/configuration#max-resources) used by the pipeline then we can try and bypass the `CENTRIFUGE_RUN` process failure by creating a custom config file that sets at least 120GB of memory, in this case increased to 100GB. The custom config below can then be provided to the pipeline via the [`-c`](#-c) parameter as highlighted in previous sections.
 
 ```nextflow
 process {
-    withName: STAR_ALIGN {
-        memory = 100.GB
+    withName: CENTRIFUGE_RUN {
+        memory = 200.GB
     }
 }
 ```
 
-> **NB:** We specify just the process name i.e. `STAR_ALIGN` in the config file and not the full task name string that is printed to screen in the error message or on the terminal whilst the pipeline is running i.e. `RNASEQ:ALIGN_STAR:STAR_ALIGN`. You may get a warning suggesting that the process selector isn't recognised but you can ignore that if the process name has been specified correctly. This is something that needs to be fixed upstream in core Nextflow.
+> **NB:** We specify just the process name i.e. `CENTRIFUGE_RUN` in the config file and not the full task name string that is printed to screen in the error message or on the terminal whilst the pipeline is running i.e. `NFCORE_SHOTGUN:CENTRIFUGE:CENTRIFUGE_RUN`. You may get a warning suggesting that the process selector isn't recognised but you can ignore that if the process name has been specified correctly. This is something that needs to be fixed upstream in core Nextflow.
 
 ### Updating containers
 

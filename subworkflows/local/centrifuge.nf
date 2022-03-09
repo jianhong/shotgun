@@ -25,6 +25,7 @@ workflow CENTRIFUGE {
     // MODULE: create krona output
     //
     KRONA_CENTRIFUGE(CENTRIFUGE_RUN.out.kraken_like_report)
+    ch_versions = ch_versions.mix(KRONA_CENTRIFUGE.out.versions.ifEmpty(null))
 
     emit:
     centrifuge = CENTRIFUGE_RUN.out.centrifuge_report// channel: [ summary ]

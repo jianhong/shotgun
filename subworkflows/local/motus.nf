@@ -21,6 +21,7 @@ workflow MOTUS {
     // MODULE: create krona output
     //
     KRONA_MOTUS(MOTUS_RUN.out.krona_input)
+    ch_versions = ch_versions.mix(KRONA_MOTUS.out.versions.ifEmpty(null))
 
     //
     // MODULE: create mOTUs summary table
