@@ -37,15 +37,15 @@ process KRAKEN2_INSTALL {
         dbs=($args)
         for i in \$dbs
         do
-            kraken2-build \\
+            bin/kraken2-build \\
                 --download-library \$i \\
                 --db KRAKEN2_DB \\
                 --threads $task.cpus
         done
-        kraken2-build --build \\
+        bin/kraken2-build --build \\
             --db KRAKEN2_DB \\
             --threads $task.cpus
-        kraken2-build --clean \\
+        bin/kraken2-build --clean \\
             --db KRAKEN2_DB \\
             --threads $task.cpus
     fi
