@@ -22,6 +22,7 @@ process KRAKEN2_INSTALL {
     sed -i -e 's/\\^ftp:/\\^https:/' bin/rsync_from_ncbi.pl
     sed -i -e 's/mv x assembly/mv -f x assembly/' bin/download_genomic_library.sh
     sed -i -e 's/download_genomic_library.sh/bin\\/download_genomic_library.sh/g; s/rsync_from_ncbi.pl/bin\\/rsync_from_ncbi.pl/g;' bin/kraken2-build
+    sed -i -e 's/kraken2-build/bin\\/kraken2-build/g' bin/standard_installation.sh
     export PATH=\${PWD}/bin:\$PATH
     if [ "${args}" = "--standard" ]; then
         bin/kraken2-build \\
