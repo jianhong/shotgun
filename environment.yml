@@ -7,7 +7,7 @@ channels:
   - defaults
 dependencies:
   - conda-forge::python=3.9.9
-  - pip=20.0.1
+  - pip=22.0.4
   - bioconda::bracken=2.6.1
   - bioconda::kaiju=1.8.2
   - bioconda::trf=4.09.1
