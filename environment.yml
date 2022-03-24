@@ -6,12 +6,10 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - conda-forge::python=3.8.3
+  - conda-forge::python=3.9.9
+  - pip=20.0.1
   - bioconda::bracken=2.6.1
-  - bioconda::centrifuge=1.0.4_beta
-  - bioconda::humann=3.0.1
   - bioconda::kaiju=1.8.2
-  - bioconda::trimmomatic=0.39
   - bioconda::trf=4.09.1
   - bioconda::bowtie2=2.4.4
   - bioconda::samtools=1.14
@@ -19,6 +17,8 @@ dependencies:
   - bioconda::kneaddata=0.10.0
   - bioconda::kraken2=2.1.2
   - bioconda::krona=2.8.1
-  - bioconda::metaphlan=3.0.14
-  - bioconda::motus=3.0.1
-  - bioconda::bioconductor-trackviewer=1.28.0
+## conflics
+  - pip:
+    - metaphlan=3.0.14
+    - motus=3.0.1
+    - centrifuge=1.0.4_beta
