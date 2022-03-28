@@ -12,7 +12,7 @@ process SANKEY {
     path reports
 
     output:
-    path "${prefix}_sankey.html"                         , emit: summary
+    path "*_sankey.html"                                 , emit: summary
     path "versions.yml"                                  , emit: versions
 
     script:
@@ -69,9 +69,10 @@ process SANKEY {
 
     ## prepare data from out to data frame with colnames:
     ## "name","taxLineage","taxonReads", "cladeReads","depth", "taxRank"
-    report <- pavian::read_reports(REPORTS, NAMES)
-    merged_reports <- pavian::merge_reports2(reports, col_names = NAMES)
-    network <- pavian::build_sankey_network(merged_reports)
-    htmlwidgets::saveWidget(network, FILENAME)
+    reports <- pavian::read_reports(REPORTS, NAMES)
+    null <- mapply(reports, names(reports), FUN=function(rep, name){
+        network <- pavian:::build_sankey_network(rep)
+        htmlwidgets::saveWidget(network, paste(name, FILENAME, sep="_"))
+    })
     """
 }
