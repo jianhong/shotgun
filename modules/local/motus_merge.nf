@@ -22,6 +22,7 @@ process MOTUS_MERGE {
     motus merge \\
         -i "${motus_outs.join(',').trim()}" \\
         -t $task.cpus \\
+        -db ${reference_db} \\
         $args \\
         -o ${prefix}_motus.out
 
