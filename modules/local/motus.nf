@@ -34,6 +34,7 @@ process MOTUS_RUN {
         -i ${prefix}.bam \\
         -t $task.cpus \\
         -n ${prefix} \\
+        -db ${reference_db} \\
         -C parenthesis \\
         -o ${prefix}_motus.out.krona
     # clean up

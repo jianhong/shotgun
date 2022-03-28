@@ -22,3 +22,4 @@ dependencies:
     - metaphlan=3.0.14
     - motus=3.0.1
     - centrifuge=1.0.4_beta
+    - bwa=0.7.17
