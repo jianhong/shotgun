@@ -1,5 +1,5 @@
 process BRACKEN_INSTALL {
-    lag 'process_medium'
+    tag 'process_medium'
     label 'error_ignore'
     label 'process_high_memory'
 
