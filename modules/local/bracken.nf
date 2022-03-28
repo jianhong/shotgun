@@ -1,6 +1,7 @@
 process BRACKEN {
     tag 'process_medium'
     label 'error_ignore'
+    label 'process_high_memory'
 
     conda (params.enable_conda ? "bioconda::bracken=2.6.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
