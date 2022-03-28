@@ -24,7 +24,7 @@ process KRONA {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        krona: \$(krona -version)
+        krona: \$( echo \$(ktImportText 2>&1) | sed 's/^.*KronaTools //g; s/- ktImportText.*\$//g')
     END_VERSIONS
     """
 }
