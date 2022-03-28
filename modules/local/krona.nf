@@ -20,7 +20,7 @@ process KRONA {
     """
     fs=($krona_out)
 
-    if [ "${#fs[@]}" -eq "1" ]; then
+    if [ "\${#fs[@]}" -eq "1" ]; then
         ktImportText  \\
             -o ${prefix}_krona.html \\
             $krona_out,${meta.id}

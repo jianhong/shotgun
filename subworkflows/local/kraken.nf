@@ -4,6 +4,7 @@
 
 include { KRAKEN2_RUN                 } from '../../modules/local/kraken'
 include { KRAKEN2_MERGE               } from '../../modules/local/kraken_mergecount'
+include { BRACKEN_INSTALL             } from '../../modules/local/brachen_install_database'
 include { BRACKEN                     } from '../../modules/local/bracken'
 include { KRONA as KRONA_KRAKEN2      } from '../../modules/local/krona'
 include { KRONA as KRONA_KRAKEN2_ALL  } from '../../modules/local/krona'
@@ -30,7 +31,8 @@ workflow KRAKEN2 {
     //
     // MODULE: Abundance estimation
     //
-    BRACKEN(KRAKEN2_RUN.out.kraken2_rep, kraken2_db)
+    BRACKEN_INSTALL(KRAKEN2_RUN.out.kraken2_rep.first(), kraken2_db)
+    BRACKEN(KRAKEN2_RUN.out.kraken2_rep.combine(BRACKEN_INSTALL.out.kmer_distrib), kraken2_db)
     ch_versions = ch_versions.mix(BRACKEN.out.versions.ifEmpty(null))
 
     //
@@ -38,7 +40,10 @@ workflow KRAKEN2 {
     //
     KRONA_KRAKEN2(KRAKEN2_RUN.out.kraken2_rep)
     ch_versions = ch_versions.mix(KRONA_KRAKEN2.out.versions.ifEmpty(null))
-    KRONA_KRAKEN2_ALL(KRAKEN2_RUN.out.kraken2_rep.map{it[1]}.collect().map{[id: "KRAKEN2_KRONA"], it})
+    KRONA_KRAKEN2_ALL(KRAKEN2_RUN.out.kraken2_rep
+                                .map{it[1]}
+                                .collect()
+                                .map{[[id: "KRAKEN2_KRONA"], it]})
 
     //
     // MODULE: create sankey plot output

@@ -23,7 +23,7 @@ workflow KAIJU {
     //
     KRONA_KAIJU(KAIJU_RUN.out.krona_input)
     ch_versions = ch_versions.mix(KRONA_KAIJU.out.versions.ifEmpty(null))
-    KRONA_KAIJU_ALL(KAIJU_RUN.out.krona_input.map{it[1]}.collect().map{[id: "KAIJU_KRONA"], it})
+    KRONA_KAIJU_ALL(KAIJU_RUN.out.krona_input.map{it[1]}.collect().map{[[id: "KAIJU_KRONA"], it]})
 
     //
     // MODULE: create kaiju summary table

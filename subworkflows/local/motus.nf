@@ -23,7 +23,7 @@ workflow MOTUS {
     //
     KRONA_MOTUS(MOTUS_RUN.out.krona_input)
     ch_versions = ch_versions.mix(KRONA_MOTUS.out.versions.ifEmpty(null))
-    KRONA_MOTUS_ALL(MOTUS_RUN.out.krona_input.map{it[1]}.collect().map{[id: "MOTUS_KRONA"], it})
+    KRONA_MOTUS_ALL(MOTUS_RUN.out.krona_input.map{it[1]}.collect().map{[[id: "MOTUS_KRONA"], it]})
 
     //
     // MODULE: create mOTUs summary table

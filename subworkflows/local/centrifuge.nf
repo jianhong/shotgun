@@ -27,7 +27,7 @@ workflow CENTRIFUGE {
     //
     KRONA_CENTRIFUGE(CENTRIFUGE_RUN.out.kraken_like_report)
     ch_versions = ch_versions.mix(KRONA_CENTRIFUGE.out.versions.ifEmpty(null))
-    KRONA_CENTRIFUGE_ALL(CENTRIFUGE_RUN.out.kraken_like_report.map{it[1]}.collect().map{[id: "CENTRIFUGE_KRONA"], it})
+    KRONA_CENTRIFUGE_ALL(CENTRIFUGE_RUN.out.kraken_like_report.map{it[1]}.collect().map{[[id: "CENTRIFUGE_KRONA"], it]})
 
     emit:
     centrifuge = CENTRIFUGE_RUN.out.centrifuge_report// channel: [ summary ]
