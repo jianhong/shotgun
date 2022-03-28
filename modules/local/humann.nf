@@ -1,6 +1,7 @@
 process HUMANN_RUN {
     tag "$meta.id"
     label 'process_high'
+    label 'error_retry'
 
     conda (params.enable_conda ? "bioconda::humann=3.0.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

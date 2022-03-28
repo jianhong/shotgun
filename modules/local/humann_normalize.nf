@@ -18,7 +18,7 @@ process HUMANN_NORM {
     def args   = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${tsv.toString().replaceAll('.tsv', '.norm')}.tsv"
     """
-    humann_config --update run_modes threads $task.cpus
+    #humann_config --update run_modes threads $task.cpus
     humann_renorm_table \\
         --input $tsv \\
         --output ${prefix} \\

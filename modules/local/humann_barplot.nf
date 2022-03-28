@@ -18,7 +18,7 @@ process HUMANN_BARPLOT {
     def args   = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    humann_config --update run_modes threads $task.cpus
+    #humann_config --update run_modes threads $task.cpus
     humann_barplot \\
         --input $tsv \\
         --output ${prefix} \\

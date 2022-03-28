@@ -18,7 +18,7 @@ process HUMANN_GROUP {
     def args   = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    humann_config --update run_modes threads $task.cpus
+    #humann_config --update run_modes threads $task.cpus
     humann_regroup_table \\
         --input $tsv \\
         --output ${prefix} \\
