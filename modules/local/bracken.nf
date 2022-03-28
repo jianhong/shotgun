@@ -1,5 +1,5 @@
 process BRACKEN {
-    tag 'process_low'
+    tag 'process_medium'
     label 'error_ignore'
 
     conda (params.enable_conda ? "bioconda::bracken=2.6.1" : null)
@@ -21,6 +21,13 @@ process BRACKEN {
     """
     ## check the nearest databaseKmers.kmer_distrib
     kmer=\$((${meta.reads_length}/50*50))
+    if [ ! -f ${reference_db}/database\${kmer}mers.kmer_distrib ]; then
+    bracken-build -d ${reference_db} \\
+        -k \${kmer} \\
+        -l ${meta.reads_length} \\
+        -t $task.cpus
+    fi
+
     bracken -d ${reference_db} \\
         -i $kraken2_report \\
         -o ${prefix}_bracken \\
