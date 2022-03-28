@@ -5,6 +5,7 @@
 include { MOTUS_RUN                 } from '../../modules/local/motus'
 include { MOTUS_MERGE               } from '../../modules/local/motus_merge'
 include { KRONA as KRONA_MOTUS      } from '../../modules/local/krona'
+include { KRONA as KRONA_MOTUS_ALL  } from '../../modules/local/krona'
 
 workflow MOTUS {
     take:
@@ -22,6 +23,7 @@ workflow MOTUS {
     //
     KRONA_MOTUS(MOTUS_RUN.out.krona_input)
     ch_versions = ch_versions.mix(KRONA_MOTUS.out.versions.ifEmpty(null))
+    KRONA_MOTUS_ALL(MOTUS_RUN.out.krona_input.map{it[1]}.collect().map{[id: "MOTUS_KRONA"], it})
 
     //
     // MODULE: create mOTUs summary table

@@ -18,9 +18,17 @@ process KRONA {
     def args   = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    ktImportText  \\
-        -o ${prefix}_krona.html \\
-        $krona_out,${meta.id}
+    fs=($krona_out)
+
+    if [ "${#fs[@]}" -eq "1" ]; then
+        ktImportText  \\
+            -o ${prefix}_krona.html \\
+            $krona_out,${meta.id}
+    else
+        ktImportText  \\
+            -o ${prefix}_krona.html \\
+            $krona_out
+    fi
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

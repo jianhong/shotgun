@@ -5,6 +5,7 @@
 include { KAIJU_RUN                   } from '../../modules/local/kaiju'
 include { KAIJU2TABLE                 } from '../../modules/local/kaiju2table'
 include { KRONA as KRONA_KAIJU        } from '../../modules/local/krona'
+include { KRONA as KRONA_KAIJU_ALL    } from '../../modules/local/krona'
 
 workflow KAIJU {
     take:
@@ -22,6 +23,7 @@ workflow KAIJU {
     //
     KRONA_KAIJU(KAIJU_RUN.out.krona_input)
     ch_versions = ch_versions.mix(KRONA_KAIJU.out.versions.ifEmpty(null))
+    KRONA_KAIJU_ALL(KAIJU_RUN.out.krona_input.map{it[1]}.collect().map{[id: "KAIJU_KRONA"], it})
 
     //
     // MODULE: create kaiju summary table

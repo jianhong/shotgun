@@ -2,8 +2,9 @@
 // Centrifuge
 //
 
-include { CENTRIFUGE_RUN            } from '../../modules/local/centrifuge'
-include { KRONA as KRONA_CENTRIFUGE } from '../../modules/local/krona'
+include { CENTRIFUGE_RUN                } from '../../modules/local/centrifuge'
+include { KRONA as KRONA_CENTRIFUGE     } from '../../modules/local/krona'
+include { KRONA as KRONA_CENTRIFUGE_ALL } from '../../modules/local/krona'
 
 workflow CENTRIFUGE {
     take:
@@ -26,6 +27,7 @@ workflow CENTRIFUGE {
     //
     KRONA_CENTRIFUGE(CENTRIFUGE_RUN.out.kraken_like_report)
     ch_versions = ch_versions.mix(KRONA_CENTRIFUGE.out.versions.ifEmpty(null))
+    KRONA_CENTRIFUGE_ALL(CENTRIFUGE_RUN.out.kraken_like_report.map{it[1]}.collect().map{[id: "CENTRIFUGE_KRONA"], it})
 
     emit:
     centrifuge = CENTRIFUGE_RUN.out.centrifuge_report// channel: [ summary ]

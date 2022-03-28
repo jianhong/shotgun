@@ -6,6 +6,7 @@ include { KRAKEN2_RUN                 } from '../../modules/local/kraken'
 include { KRAKEN2_MERGE               } from '../../modules/local/kraken_mergecount'
 include { BRACKEN                     } from '../../modules/local/bracken'
 include { KRONA as KRONA_KRAKEN2      } from '../../modules/local/krona'
+include { KRONA as KRONA_KRAKEN2_ALL  } from '../../modules/local/krona'
 include { SANKEY as SANKEY_KRAKEN2    } from '../../modules/local/sankey'
 
 workflow KRAKEN2 {
@@ -37,6 +38,7 @@ workflow KRAKEN2 {
     //
     KRONA_KRAKEN2(KRAKEN2_RUN.out.kraken2_rep)
     ch_versions = ch_versions.mix(KRONA_KRAKEN2.out.versions.ifEmpty(null))
+    KRONA_KRAKEN2_ALL(KRAKEN2_RUN.out.kraken2_rep.map{it[1]}.collect().map{[id: "KRAKEN2_KRONA"], it})
 
     //
     // MODULE: create sankey plot output
