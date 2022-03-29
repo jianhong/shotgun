@@ -21,10 +21,9 @@ process BRACKEN_INSTALL {
     prefix = task.ext.prefix ?: "metaphlan_db"
     """
     ## check the nearest databaseKmers.kmer_distrib
-    kmer=\$((${meta.reads_length}/50*50))
     if [ ! -f ${reference_db}/database${meta.reads_length}mers.kmer_distrib ]; then
     bracken-build -d ${reference_db} \\
-        -k \${kmer} \\
+        $args \\
         -l ${meta.reads_length} \\
         -t $task.cpus
     fi
