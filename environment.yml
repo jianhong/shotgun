@@ -25,4 +25,3 @@ dependencies:
     - motu-profiler==3.0.2
     - bwa==1.1.1
     - centrifuge
-    - pyyaml
