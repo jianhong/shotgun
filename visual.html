@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>jianhong/shotgun pipeline</title>
+  <meta name="description" content="This pipeline analyses shotgun data.">
+  <meta name="author" content="Phil Ewels">
+  <meta name="color-scheme" content="light dark">
+  <link rel="shortcut icon" href="assets/nf-core-logo-square.png" type="image/png">
+  <link rel="alternate" type="application/rss+xml" title="nf-core: Events" href="./events/rss">
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/471b59d3f8.js"></script>
+  <script src="assets/jquery.min.js"></script>
+  <script src="assets/bootstrap.bundle.min.js"></script>
+  <script src="assets/highlight.min.js"></script>
+  <script src="assets/groovy.min.js"></script>
+  <!-- Page-specific CSS and JS -->
+      <script src="assets/moment.js"></script>
+    <script src="assets/Chart.min.js"></script>
+    <link href="assets/Chart.min.css" rel="stylesheet">
+    <script src="assets/hammer.min.js"></script>
+    <script src="assets/chartjs-plugin-zoom.min.js"></script>
+    <!-- NO CURRENT VERSION ON NPM --> <script src="assets/canvas2svg.js"></script><!-- NO CURRENT VERSION ON NPM -->
+    <script src="assets/FileSaver.min.js"></script>
+    <script src="assets/jquery.tablesorter.min.js"></script>
+
+  <!-- Custom nf-core CSS and JS -->
+  <link href="assets/nf-core-light.css" rel="stylesheet" id="theme-stylesheet">
+  <script src="assets/nf-core.js"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+      </script>
+<style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style>
+
+</head>
+
+<body tabindex="0">
+  <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light shadow-sm site-nav d-print-none">
+    <div class="container-fluid">
+      <a class="navbar-brand d-md-none" href="/">
+        <img height="25px" src="/assets/img/logo/nf-core-logo.svg" class="hide-dark">
+        <img height="25px" src="/assets/img/logo/nf-core-logo-darkbg.svg" class="hide-light">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-md-center" id="navbarCollapse">
+        <ul class="navbar-nav">
+          <li class="nav-item p-1">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item p-1">
+            <a class="nav-link" href="usage.html">Usage docs</a>
+          </li>
+          <li class="nav-item p-1">
+            <a class="nav-link" href="parameters.html">Parameters</a>
+          </li>
+          <li class="nav-item p-1">
+            <a class="nav-link" href="output.html">Output docs</a>
+          </li>
+          <li class="nav-item p-1">
+            <a class="nav-link" href="multiqc.html">Multiqc</a>
+          </li>
+          <li class="nav-item p-1">
+            <a class="nav-link" href="visual.html">Visualization</a>
+          </li>
+        </ul>
+      <hr class="d-md-none">
+      </div>
+    </div>
+  </nav>
+
+
+    <div class="mainpage">
+      <div class="mainpage-heading triangle-down">
+        <div class="container">
+          <h1 class="display-2">jianhong/<br class="d-sm-none">shotgun</h1>
+          <p class="lead">This pipeline analyses data for shotgun data.</p>
+        </div>
+      </div>
+
+      <div class="container-fluid mainpage-subheader-heading chevron-down">
+          <div class="container text-center">
+            <p>
+              <a href="https://github.com/jianhong/shotgun" class="btn btn-success btn-lg d-print-none">
+                <i class="fab fa-github" aria-hidden="true"></i> https://github.com/jianhong/shotgun
+              </a>
+            </p>
+          </div>
+        </div>
+
+      <div class="container-xxl main-content">
+
+        <ul class="nav nav-fill nfcore-subnav justify-content-around d-print-none">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="fas fa-sign-in me-1" aria-hidden="true"></i> Introduction</a>
+          </li>
+              <li class="nav-item">
+            <a class="nav-link" href="usage.html"><i class="far fa-book me-1" aria-hidden="true"></i> Usage docs</a>
+          </li>
+                <li class="nav-item">
+              <a class="nav-link" href="parameters.html"><i class="far fa-book me-1" aria-hidden="true"></i> Parameter docs</a>
+            </li>
+              <li class="nav-item">
+            <a class="nav-link" href="output.html"><i class="far fa-book me-1" aria-hidden="true"></i> Output docs</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="multiqc.html"><i class="far fa-book me-1" aria-hidden="true"></i> MultiQC </a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link active" href="visual.html"><i class="far fa-book me-1" aria-hidden="true"></i> Visualization </a>
+          </li>
+
+        </ul>
+
+        <div class="row flex-wrap-reverse flex-lg-wrap ms-lg-5">
+          <div class="col-12 col-lg-9">
+            <div class="rendered-markdown pipeline-page-content">
+              <h1 id="krona" class="">Krona</h1>
+              <ul>
+                <li><a href='Krona/KAIJU_KRONA_krona.html'>Kaiju</a></li>
+                <li><a href='Krona/KRAKEN2_KRONA_krona.html'>Kraken2</a></li>
+                <li><a href='Krona/MOTUS_KRONA_krona.html'>mOTUs2</a></li>
+              </ul>
+              <h1 id="pavian" class="">Pavian</h1>
+              <ul>
+                <li><a href='pavian/s1_pavaian_sankey.html'>s1</a></li>
+                <li><a href='pavian/s2_pavian_sankey.html'>s2</a></li>
+                <li><a href='pavian/s3_pavian_sankey.html'>s3</a></li>
+                <li><a href='pavian/s4_pavian_sankey.html'>s4</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="subfooter"><div class="container"><p class="mb-0"><i class="fab fa-github"></i> Read this page on GitHub: <code><a href="https://github.com/jianhong/shotgun/blob/master/README.md">https://github.com/jianhong/shotgun/blob/master/README.md</a></code></div></footer>
+<footer class="footer">
+  <div class="container">
+        <small class="d-block mb-3">
+          See the source code for this website on GitHub: <a href="https://github.com/jianhong/shotgun" target="_blank">https://github.com/jianhong/shotgun</a>
+        </small>
+  </div>
+</footer>
+
+<div class="toast" id="pipeline_sidebar_cmd_copied" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <img src="/assets/img/logo/nf-core-logo-square.png" class="rounded me-2" alt="">
+    <strong class="me-auto">Command copied!</strong>
+    <button type="button" class="ms-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body">
+    Paste this command into your terminal to run the pipeline with a small test dataset.
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    // Plot hover vertical line
+    // https://stackoverflow.com/a/45172506/713980
+    Chart.defaults.LineWithLine = Chart.defaults.line;
+    Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+      draw: function(ease) {
+        Chart.controllers.line.prototype.draw.call(this, ease);
+
+        if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+          var activePoint = this.chart.tooltip._active[0],
+            ctx = this.chart.ctx,
+            x = activePoint.tooltipPosition().x,
+            topY = this.chart.scales['y-axis-0'].top,
+            bottomY = this.chart.scales['y-axis-0'].bottom;
+
+          // draw line
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x, topY);
+          ctx.lineTo(x, bottomY);
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = '#999';
+          ctx.stroke();
+          ctx.restore();
+        } else {
+          $('#clones_header').text('clones in last ');
+          $('#clones_count').text('0');
+        }
+      }
+    });
+
+    // Make the plot
+    var ctx = document.getElementById('clones_plot').getContext('2d');
+    new Chart(ctx, {
+      data: {
+        datasets: [{
+          backgroundColor: 'rgba(84, 171, 106, 0.2)',
+          borderColor: 'rgba(84, 171, 106, 1)',
+          pointRadius: 0,
+          pointHoverBorderColor: 'rgba(84, 171, 106, 0)', // transparent
+          pointHoverBackgroundColor: 'rgba(84, 171, 106, 0)', // transparent
+          data: [
+                      ]
+        }],
+      },
+      type: 'LineWithLine',
+      options: {
+        onClick: function(e) {
+          window.location.href = '/shotgun/stats';
+        },
+        elements: {
+          point: {
+            radius: 0,
+            hitRadius: 3,
+            hoverRadius: 3
+          },
+          line: {
+            borderWidth: 2,
+            tension: 0 // disables bezier curves
+          }
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            display: false
+          }],
+          yAxes: [{
+            display: false
+          }],
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          enabled: false,
+          mode: 'x',
+          intersect: false,
+          custom: function(tooltipModel) {
+            tooltipModel.opacity = 0
+          },
+          callbacks: {
+            // Use the footer callback to display the sum of the items showing in the tooltip
+            footer: function(tooltipItems, data) {
+              $('#clones_header').text('clones - ' + tooltipItems[0]['label']);
+              $('#clones_count').text(tooltipItems[0]['value']);
+            },
+          }
+        },
+      }
+    });
+  });
+</script>
+
+</body>
+
+</html>
