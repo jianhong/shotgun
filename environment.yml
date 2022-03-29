@@ -18,6 +18,7 @@ dependencies:
   - bioconda::kneaddata=0.10.0
   - bioconda::kraken2=2.1.2
   - bioconda::krona=2.8.1
+  - bioconda::multiqc=1.11
 ## conflics
   - pip:
     - metaphlan==3.0.14
