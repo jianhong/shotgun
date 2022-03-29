@@ -162,6 +162,7 @@ workflow SHOTGUN {
     if(!params.skip_kaiju){
         KAIJU(ch_knead_data, PREPARE_GENOME.out.kaiju_db)
         ch_versions = ch_versions.mix(KAIJU.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(KAIJU.out.kaiju.collect().ifEmpty([]))
     }
 
     //
@@ -174,6 +175,7 @@ workflow SHOTGUN {
             ch_kreport2mpa,
             ch_combine_mpa)
         ch_versions = ch_versions.mix(KRAKEN2.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(KRAKEN2.out.kraken2.collect().ifEmpty([]))
     }
 
     //
