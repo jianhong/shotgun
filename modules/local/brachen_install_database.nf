@@ -22,7 +22,7 @@ process BRACKEN_INSTALL {
     """
     ## check the nearest databaseKmers.kmer_distrib
     kmer=\$((${meta.reads_length}/50*50))
-    if [ ! -f ${reference_db}/database\${kmer}mers.kmer_distrib ]; then
+    if [ ! -f ${reference_db}/database\${meta.reads_length}mers.kmer_distrib ]; then
     bracken-build -d ${reference_db} \\
         -k \${kmer} \\
         -l ${meta.reads_length} \\

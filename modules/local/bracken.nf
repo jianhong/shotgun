@@ -12,20 +12,17 @@ process BRACKEN {
     path reference_db
 
     output:
-    path "${prefix}_bracken"                             , emit: bracken
+    path "${prefix}_*"                                   , emit: bracken
     path "versions.yml"                                  , emit: versions
 
     script:
     def args   = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    ## check the nearest databaseKmers.kmer_distrib
-    kmer=\$((${meta.reads_length}/50*50))
-
     bracken -d ${reference_db} \\
         -i $kraken2_report \\
         -o ${prefix}_bracken \\
-        -r \${kmer} \\
+        -r \${meta.reads_length} \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
