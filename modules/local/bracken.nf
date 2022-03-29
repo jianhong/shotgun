@@ -22,7 +22,7 @@ process BRACKEN {
     bracken -d ${reference_db} \\
         -i $kraken2_report \\
         -o ${prefix}_bracken \\
-        -r \${meta.reads_length} \\
+        -r ${meta.reads_length} \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
