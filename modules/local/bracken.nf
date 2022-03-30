@@ -1,5 +1,6 @@
 process BRACKEN {
-    tag 'process_low'
+    tag "${meta.id}"
+    label 'process_low'
     label 'error_ignore'
 
     conda (params.enable_conda ? "bioconda::bracken=2.6.1" : null)

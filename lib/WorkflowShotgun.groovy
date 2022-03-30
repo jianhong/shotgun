@@ -71,7 +71,7 @@ class WorkflowShotgun {
                 String line
                 line = buffered.readLine()
                 line = buffered.readLine()
-                return line.length()
+                return 5*Math.round(line.length()/5)
         }
     }
 }
