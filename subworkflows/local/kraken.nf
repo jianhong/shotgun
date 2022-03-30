@@ -31,8 +31,12 @@ workflow KRAKEN2 {
     //
     // MODULE: Abundance estimation
     //
-    BRACKEN_INSTALL(KRAKEN2_RUN.out.kraken2_rep.first(), kraken2_db)
-    BRACKEN(KRAKEN2_RUN.out.kraken2_rep.combine(BRACKEN_INSTALL.out.kmer_distrib), kraken2_db)
+    BRACKEN_INSTALL(KRAKEN2_RUN.out.kraken2_rep.unique{ it[0].reads_length }, kraken2_db)
+    ch_bracken_input = KRAKEN2_RUN.out.kraken2_rep
+                            .map{[it[0].reads_length, it[0], it[1]]}
+                            .cross(BRACKEN_INSTALL.out.kmer_distrib)
+                            .map{[it[1], it[2], it[3]]}
+    BRACKEN(ch_bracken_input, kraken2_db)
     ch_versions = ch_versions.mix(BRACKEN.out.versions.ifEmpty(null))
 
     //

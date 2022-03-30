@@ -1,9 +1,10 @@
 process BRACKEN_INSTALL {
-    tag 'process_medium'
+    tag "${meta.reads_length}"
+    label 'process_medium'
     label 'error_ignore'
     label 'process_high_memory'
 
-    conda (params.enable_conda ? "bioconda::bracken=2.6.1" : null)
+    conda (params.enable_conda ? "bioconda::bracken=2.6.1 bioconda::kraken2=2.1.2" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/bracken:2.6.1--py39h7cff6ad_2' :
         'quay.io/biocontainers/bracken:2.6.1--py39h7cff6ad_2' }"
@@ -13,7 +14,7 @@ process BRACKEN_INSTALL {
     path reference_db
 
     output:
-    path "${reference_db}/*mers.kmer_distrib", emit: kmer_distrib
+    tuple val(meta.reads_length), path("${reference_db}/database${meta.reads_length}mers.kmer_distrib"), emit: kmer_distrib
     path "versions.yml", emit: versions
 
     script:
