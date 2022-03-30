@@ -41,7 +41,6 @@ workflow KRAKEN2 {
                                 dst, rep ->
                                     [rep[1], rep[2], dst[1]]
                             }
-    KRAKEN2_RUN.out.kraken2_rep.view()
     BRACKEN(ch_bracken_input, kraken2_db)
     ch_versions = ch_versions.mix(BRACKEN.out.versions.ifEmpty(null))
 
